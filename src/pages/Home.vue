@@ -34,16 +34,19 @@ const addToFavorite = async (item) => {
   try {
     if (!item.isFavorite) {
       const obj = {
-        item_id: item.id
+        item_id: item.id,
+        title: item.title,
+        price: item.price,
+        imageUrl: item.imageUrl
       };
       item.isFavorite = true;
 
-      const { data } = await axios.post(`https://e70dd36078641b4a.mokky.dev/favorites`, obj)
+      const { data } = await axios.post(`https://6829871e6075e87073a6ba7a.mockapi.io/api/v1/favorites`, obj)
 
       item.favoriteId = data.id;
     } else {
       item.isFavorite = false;
-      await axios.delete(`https://e70dd36078641b4a.mokky.dev/favorites/${item.favoriteId}`)
+      await axios.delete(`https://6829871e6075e87073a6ba7a.mockapi.io/api/v1/favorites/${item.favoriteId}`)
       item.favoriteId = null;
     }
   } catch (err) {
@@ -53,7 +56,7 @@ const addToFavorite = async (item) => {
 
 const fetchFavorites = async () => {
   try {
-    const { data: favorites } = await axios.get(`https://e70dd36078641b4a.mokky.dev/favorites`)
+    const { data: favorites } = await axios.get(`https://6829871e6075e87073a6ba7a.mockapi.io/api/v1/favorites`)
 
     items.value = items.value.map(item => {
       const favorite = favorites.find(favorite => favorite.item_id === item.id);
@@ -80,10 +83,10 @@ const fetchItems = async () => {
     }
 
     if (filters.searchQuery) {
-      params.title = `*${filters.searchQuery}*`;
+      params.title = `${filters.searchQuery}`;
     }
 
-    const { data } = await axios.get(`https://e70dd36078641b4a.mokky.dev/items`, {
+    const { data } = await axios.get(`https://6829871e6075e87073a6ba7a.mockapi.io/api/v1/items`, {
       params
     })
 

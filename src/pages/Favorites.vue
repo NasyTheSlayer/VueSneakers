@@ -8,9 +8,9 @@ const favorites = ref([]);
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get('https://e70dd36078641b4a.mokky.dev/favorites?_relations=items');
+    const { data } = await axios.get('https://6829871e6075e87073a6ba7a.mockapi.io/api/v1/favorites');
 
-    favorites.value = data.map(obj => obj.item);
+    favorites.value = data;
   } catch (err) {
     console.log(err);
   }
